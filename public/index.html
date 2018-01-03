@@ -5,14 +5,206 @@
 	<meta charset="utf-8">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <style>
+        div.jumbotron {
+            background-image: url('/img/background-main.jpg');
+            background-size: cover;
+            color: white;
+            text-align: center;
+        }
+
+        div.jumbotron h2 {
+            text-transform: uppercase;
+        }
+
+        .invisivel {
+            display: none;
+        }
+
+        span.has-error {
+            color: #f00;
+        }
+    </style>
 </head>
 <body>
-<main role="main" id="main"></main>
+<main role="main" id="main">
+    <!-- Alerts -->
+    <div class="alert alert-success alert-dismissible fade show invisivel" role="alert" id="apply-success" name="apply-success">
+      <strong>Inscrição Realizada</strong> A inscrição foi realizada com sucesso!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="alert alert-danger alert-dismissible fade show invisivel" role="alert" id="apply-error" name="apply-error">
+      <strong>Inscrição Não Realizada</strong> Houve um erro no processo de inscrição!
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <!-- Fim de Alerts -->
+
+
+    <!-- Jumbrotron -->
+    <div class="jumbotron">
+        <h2>Dê propósito para seu código</h2>
+        <p>Cansado de desenvolver projetos sem sentido? Participe do Avanade Angular Academy</p>
+        <button type="button" class="btn btn-success" name="btn-apply-form" id="btn-apply-form" data-toggle="modal" data-target="#apply-modal">
+            Inscreva-se
+        </button>
+    </div>
+    <!-- Fim de Jumbotron -->
+
+    <!-- Seções -->
+    <div id="secoes" class="container">
+        <div class="row">
+            <!-- Inscrições -->
+        <div class="col-xs-12 col-md-3">
+            <h3>Incrições</h3>
+            <span>02/dez a 04/jan</span>
+            <p>Para se inscrever basta preencher o formulário e se preparar para o nosso teste técnico com cursos online e simulados.</p>
+        </div>
+
+        <!-- Teste Técnico -->
+        <div class="col-xs-12 col-md-3">
+            <h3>Teste técnico</h3>
+            <span>05 e 06/jan</span>
+            <p>Em seguida, prove que você está preparado fazendo os testes técnicos totalmente mão na massa.</p>
+        </div>
+
+        <!-- Seleção e Contratação -->
+        <div class="col-xs-12 col-md-3">
+            <h3>Seleção e Contratação</h3>
+            <span>07/jan a 14/jan</span>
+            <p>Os melhores candidatos serão entrevistados e contratados pela Avanade.</p>
+        </div>
+
+        <!-- Treinamento -->
+        <div class="col-xs-12 col-md-3">
+            <h3>Treinamento</h3>
+            <span>15/jan a 26/jan</span>
+            <p>Serão duas semanas de treinamento super hands-on com os melhores devs do mercado.
+            </p>
+        </div>
+    </div>
+        </div>
+    <!-- Fim de Seções -->
+</main>
+
+<!-- Modal -->
+<div class="modal fade" id="apply-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Inscrição</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="apply-form">
+            <div class="form-group">
+                <input type="text" name="name" id="name" class="form-control" placeholder="Insira seu nome">
+                <span id="feedback-name" class="invisivel has-error">Não pode estar vazio</span>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" id="email" class="form-control" placeholder="Insira seu e-mail">
+                <span id="feedback-email" class="invisivel has-error">Não pode estar vazio<br>Não é válido</span>
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button name="btn-apply" id="btn-apply" type="button" class="btn btn-primary">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Fim de Modal -->
+
 <script
   src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+<script type="text/javascript">
+    var app = {
+        init: function() {
+            this.enableValidaForm();
+        },
+
+        enableValidaForm: function() {
+            $('#btn-apply').on('click', this.validaForm)
+        },
+
+        validaForm: function() {
+            if (app.isCampoNameOK() & app.isCampoEmailOK()) {
+                app.mostrarAlertSuccess();
+                app.doRequisicaoAjax();
+                $('#apply-modal').modal('hide');
+            } else {
+                app.mostrarAlertError();
+            }
+        },
+
+        mostrarAlertSuccess: function() {
+            $('#apply-success').removeClass('invisivel');
+        },
+
+        mostrarAlertError: function() {
+            $('#apply-error').removeClass('invisivel');
+        },
+
+        isCampoNameOK: function() {
+            var resultado = false;
+
+            if (! $('#name').val()) {
+                $('#feedback-name').removeClass('invisivel');
+            } else {
+                $('#feedback-name').addClass('invisivel');
+                resultado = true;
+            }
+
+            return resultado;
+        },
+
+        isCampoEmailOK: function() {
+            var resultado = false;
+
+            if (! $('#email').val()) {
+                $('#feedback-email').removeClass('invisivel');
+            } else {
+                $('#feedback-email').addClass('invisivel');
+                resultado = true;
+            }
+
+            return resultado;
+        },
+
+        doRequisicaoAjax: function() {
+            $.ajax({
+                method: 'POST',
+                url: 'http://avanade.gama.academy/api/process_applications',
+                dataType: 'json',
+                headers: { EMAIL: 'msena.ifsp@gmail.com' }, // coloque seu email que usou para se inscrever aqui!
+                contentType: 'application/json',
+                data: JSON.stringify({ process_application: { name: $('#name').val(), email: $('#email').val() } }),
+                success: function(json) { 
+                    console.log('Sucesso!');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown + ':' + textStatus);
+                }
+            });
+        }
+    }
+
+    $(function() {
+        app.init();
+    });
+</script>
 </body>
 </html>
